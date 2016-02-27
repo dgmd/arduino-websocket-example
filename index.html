@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+    #ledToggleButton {
+        /* Style our button */
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+    
+    #ledToggleButton.off {
+        /* Give it a background color for when it's off */
+        background-color: pink;
+    }
+    
+    #ledToggleButton.on {
+        /* Give it a background color for when it's on */
+        background-color: lightgreen;
+    }
+    </style>
+</head>
+
+<body>
+    <div id='ledToggleButton' class='off'></div>
+    <div>
+        Analog Pin A0's value: <span id='analogUpdateState'></span>
+    </div>
+    <!-- Load the socket.io library -->
+    <script src="/socket.io.js"></script>
+    <script>
+    var socket = io.connect('http://localhost:3000'); // Connect to our socket.io server on the Arduino
+
+    socket.on('analogUpdate', function(data) { // When we receive the analogUpdate event
+        console.log("Received some analogUpdate data!", data); // print out the data sent along with the event to the console
+        var analogUpdateState = document.querySelector('#analogUpdateState'); // Grab our analogUpdateState <span> element
+        analogUpdateState.innerHTML = data.value; // and put the `value` from our data into the span
+    });
+
+    // Toggling the LED when we click our button
+    var ledToggleButton = document.querySelector('#ledToggleButton'); // Grab the button
+    ledToggleButton.addEventListener('click', function(event) { // Add an event listener for when we click
+    	// Toggle the `on` and `off` classes— since it starts with one (`off`), there should only ever be one of these classes attached to the button…we use this to control the background color
+        ledToggleButton.classList.toggle('on');
+        ledToggleButton.classList.toggle('off'); 
+        socket.emit('toggleLED', { // and then send the `toggleLED` event over the socket
+            'timeClicked': Date.now() // and send along the time we clicked the button as some extra data
+        });
+    });
+    </script>
+</body>
+
+</html>
