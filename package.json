@@ -1,0 +1,25 @@
+{
+  "name": "arduino-websocket-example",
+  "version": "0.0.1",
+  "description": "A small example demonstrating WebSocket communication on the Arduino using express, johnny-five, and socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dgmd/arduino-websocket-example.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dgmd/arduino-websocket-example/issues"
+  },
+  "homepage": "https://github.com/dgmd/arduino-websocket-example#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "johnny-five": "^0.9.26",
+    "socket.io": "^1.4.5"
+  }
+}
